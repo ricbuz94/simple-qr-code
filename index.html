@@ -71,10 +71,12 @@
 			display: block;
 			font-weight: bold;
 			font-family: inherit;
-			font-size: 0.75rem;
+			font-size: 1rem;
 			padding: 0.25rem;
 			text-align: center;
 			text-transform: uppercase;
+			user-select: none;
+			-webkit-user-select: none;
 		}
 
 		.text {
@@ -84,9 +86,10 @@
 			font-size: 2rem;
 			font-family: inherit;
 			padding: 0.75rem 1.25rem;
-			min-width: 350px;
+			min-width: 250px;
 			outline: none;
 			border-radius: var(--radius);
+			-webkit-border-radius: var(--radius);
 			backface-visibility: hidden;
 			background-color: var(--blur-background-color);
 			backdrop-filter: saturate(180%) blur(15px);
@@ -121,6 +124,11 @@
 			transition: var(--transition);
 		}
 
+		#download:disabled {
+			cursor: not-allowed;
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
 		#download>p {
 			text-transform: uppercase;
 			font-size: 1.25rem;
@@ -129,6 +137,10 @@
 
 		#download:hover {
 			background-color: var(--primary-color-dark);
+		}
+
+		#download:disabled:hover {
+			background-color: rgba(0, 0, 0, 0.4);
 		}
 
 		p {
@@ -153,11 +165,11 @@
 	<div id="container">
 		<div class="input-container">
 			<label class="label" for="text">text</label>
-			<input id="text" class="text" placeholder="https://ricbuz94.github.io">
+			<input id="text" class="text" maxlength="250" placeholder="https://ricbuz94.github.io">
 		</div>
 		<div class="input-container">
 			<label class="label" for="title">title</label>
-			<input id="title" class="text" placeholder="MyWebsite">
+			<input id="title" class="text" maxlength="150" placeholder="MyWebsite">
 		</div>
 		<button id="download">
 			<img src="download.svg" alt="Download">

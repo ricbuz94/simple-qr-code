@@ -1,5 +1,6 @@
-let size = 420;
+let size = 380;
 let qrimage, ctx;
+let timer = null;
 const offset = 16 * 4;
 
 if (window.screen.availWidth <= 800) {
@@ -22,9 +23,10 @@ function drawQR({ text: exText, title: exTitle }) {
 		qrimage.remove();
 		ctx = undefined;
 	}
+
+	// Draw code
 	$("#qrcode").qrcode({ width: size, height: size, text });
 	qrimage = document.querySelector("#qrcode > canvas");
-	// qrimage.setAttribute("willReadFrequently", true);
 	ctx = qrimage.getContext("2d", { willReadFrequently: true });
 	const tmp = ctx.getImageData(0, 0, qrimage.width, qrimage.height);
 	qrimage.height = size + offset;
@@ -62,9 +64,16 @@ async function downloadImage(imageSrc) {
 	document.body.removeChild(link);
 }
 
+function enableButton() {
+	$("#download").prop("disabled", false);
+	clearTimeout(timer);
+}
+
 // Download QR image
-$("#download").on("click", async () => {
+$("#download").on("click", () => {
+	$("#download").prop("disabled", true);
 	const img = new Image();
 	img.src = qrimage.toDataURL("image/png", 1.0);
-	await downloadImage(img.src);
+	downloadImage(img.src);
+	timer = setTimeout(enableButton, 3E3);
 });
